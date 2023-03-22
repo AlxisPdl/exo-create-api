@@ -158,3 +158,25 @@ exports.SignIn = async (req, res) => {
         });
     }
 }
+
+exports.GetProfile = async (req, res) => {
+
+    const { id } = req.decoded;
+
+    try {
+        const user = await User.findOne({ where: { id: id } });
+        
+
+        return res.status(200).json({
+            error: false,
+            message: "L'utilisateur a été trouvé.",
+            user: req.decoded
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: "Une erreur interne est survenue, veuillez réessayer plus tard."
+        });
+    }
+}
